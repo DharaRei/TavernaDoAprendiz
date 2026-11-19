@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa da Jornada - Taverna do Aprendiz</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        body { font-family: 'Inter', sans-serif; }
+
+        /* Fundo fixo ou expansível para permitir o scroll do mapa */
+        .bg-mapa-taverna {
+            background-color: #0b0719;
+            background-image: url('../assests/img/mapaMenuAluno.jpn.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Efeito de pulso mágico nos pontos */
+        @keyframes pulse-magico {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(245, 158, 11, 0.8); }
+            50% { transform: scale(1.1); box-shadow: 0 0 25px rgba(245, 158, 11, 1); }
+        }
+        .ponto-magico {
+            animation: pulse-magico 2.5s infinite ease-in-out;
+        }
+
+        /* Estilização suave da barra de rolagem (Scrollbar mágica) */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0719;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d97706; /* Cor âmbar/dourada */
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 min-h-screen flex flex-col justify-between overflow-x-hidden relative">
+
+    <!-- BARRA SUPERIOR (FIXA NO TOPO) -->
+    <header class="w-full fixed top-0 left-0 bg-slate-900/90 backdrop-blur-md border-b border-amber-500/30 px-6 py-3 flex items-center justify-between z-50 shadow-lg">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">🛡️</span>
+            <div>
+                <h1 class="font-playfair text-amber-100 text-lg font-bold">Taverna do Aprendiz</h1>
+                <p class="text-xs text-amber-400/80" id="saudacao-aluno">Bem-vindo, Aventureiro!</p>
+            </div>
+        </div>
+
+        <!-- Menu Sanduíche -->
+        <div class="relative">
+            <button onclick="toggleMenu()" class="flex items-center gap-2 bg-slate-950/80 border border-amber-500/50 hover:border-amber-400 px-4 py-2 rounded-xl text-amber-200 text-sm font-semibold transition-all cursor-pointer shadow-md">
+                <span>☰</span> Menu
+            </button>
+
+            <div id="dropdown-menu" class="hidden absolute right-0 mt-2 w-48 bg-slate-900 border-2 border-amber-500/60 rounded-2xl shadow-2xl overflow-hidden z-50 divide-y divide-amber-500/20">
+                <a href="perfilAluno.html" class="block px-4 py-2.5 text-xs text-amber-100 hover:bg-purple-950/60 transition-all flex items-center gap-2">
+                    👤 Meu Perfil
+                </a>
+                <a href="progressoAluno.html" class="block px-4 py-2.5 text-xs text-amber-100 hover:bg-purple-950/60 transition-all flex items-center gap-2">
+                    📊 Meu Progresso
+                </a>
+                        <a href="../telas/index.html" class="block px-4 py-2.5 text-xs text-amber-100 hover:bg-purple-950/60 transition-all flex items-center gap-2">
+                    🚪 Sair da Taverna
+                        </a>
+                </button>
+            </div>
+        </div>
+    </header>
+
+  <!-- ÁREA DO MAPA COM ROLAGEM LIVRE E NATURAL -->
+    <main class="relative w-full flex-grow flex items-start md:items-center justify-start md:justify-center pt-24 pb-12 px-4 overflow-auto">
+        
+        <!-- Container do Mapa com margem automática para centralizar quando couber e rolar quando faltar espaço -->
+        <div class="relative w-[1000px] h-[600px] bg-mapa-taverna rounded-3xl border-4 border-amber-500/60 shadow-[0_0_50px_rgba(0,0,0,0.9)] mx-auto shrink-0">
+            
+            <!-- Ponto 1: Torre do Mago -->
+            <div class="absolute top-[32%] left-[22%] group cursor-pointer z-20">
+                <a href="torreMatematica.html" class="ponto-magico relative flex items-center justify-center w-12 h-12 rounded-full bg-amber-500 hover:bg-amber-400 border-2 border-amber-100 shadow-2xl transition-transform hover:scale-110">
+                    <span class="text-xl">⭐</span>
+                </a>
+                <div class="absolute left-1/2 -translate-x-1/2 bottom-14 hidden group-hover:flex flex-col items-center pointer-events-none z-30 whitespace-nowrap">
+                    <div class="bg-slate-900/95 border-2 border-amber-400 text-amber-100 px-3 py-1.5 rounded-xl text-xs font-bold shadow-2xl backdrop-blur-md">
+                        🏰 Torre do Mago <span class="text-amber-300 font-normal block text-[10px] text-center">Matemagicamente</span>
+                    </div>
+                    <div class="w-2 h-2 bg-amber-400 rotate-45 -mt-1"></div>
+                </div>
+            </div>
+
+            <!-- Ponto 2: Muralha do Físico -->
+            <div class="absolute top-[42%] right-[25%] group cursor-pointer z-20">
+                <a href="muralhaFisica.html" class="ponto-magico relative flex items-center justify-center w-12 h-12 rounded-full bg-amber-500 hover:bg-amber-400 border-2 border-amber-100 shadow-2xl transition-transform hover:scale-110">
+                    <span class="text-xl">⭐</span>
+                </a>
+                <div class="absolute left-1/2 -translate-x-1/2 bottom-14 hidden group-hover:flex flex-col items-center pointer-events-none z-30 whitespace-nowrap">
+                    <div class="bg-slate-900/95 border-2 border-amber-400 text-amber-100 px-3 py-1.5 rounded-xl text-xs font-bold shadow-2xl backdrop-blur-md">
+                        🛡️ Muralha do Físico <span class="text-amber-300 font-normal block text-[10px] text-center">Ciências & Leis</span>
+                    </div>
+                    <div class="w-2 h-2 bg-amber-400 rotate-45 -mt-1"></div>
+                </div>
+            </div>
+
+            <!-- Ponto 3: Cabana do Alquimista -->
+            <div class="absolute bottom-[28%] left-[48%] group cursor-pointer z-20">
+                <a href="cabanaAlquimista.html" class="ponto-magico relative flex items-center justify-center w-12 h-12 rounded-full bg-amber-500 hover:bg-amber-400 border-2 border-amber-100 shadow-2xl transition-transform hover:scale-110">
+                    <span class="text-xl">⭐</span>
+                </a>
+                <div class="absolute left-1/2 -translate-x-1/2 bottom-14 hidden group-hover:flex flex-col items-center pointer-events-none z-30 whitespace-nowrap">
+                    <div class="bg-slate-900/90 border-2 border-amber-400 text-amber-100 px-3 py-1.5 rounded-xl text-xs font-bold shadow-2xl backdrop-blur-md">
+                        ⚗️ Cabana do Alquimista <span class="text-amber-300 font-normal block text-[10px] text-center">Química & Poções</span>
+                    </div>
+                    <div class="w-2 h-2 bg-amber-400 rotate-45 -mt-1"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="w-full text-center py-2 bg-slate-950/80 backdrop-blur-sm border-t border-amber-500/20 z-40">
+        <p class="text-amber-200/60 text-xs font-medium">
+            © 2026 Dhara Rei • Global Solution Citizen Tech (Novembro/2026)
+        </p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        window.onload = function() {
+            const alunoSalvo = localStorage.getItem('alunoLogado');
+            if (alunoSalvo) {
+                const aluno = JSON.parse(alunoSalvo);
+                const primeiroNome = aluno.nome ? aluno.nome.split(' ')[0] : 'Aventureiro';
+                document.getElementById('saudacao-aluno').innerText = `Saudações, ${primeiroNome}!`;
+            }
+        };
+
+        function toggleMenu() {
+            const menu = document.getElementById('dropdown-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('button')) {
+                const menu = document.getElementById('dropdown-menu');
+                if (!menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                }
+            }
+        }
+
+        function sairDaTaverna() {
+            localStorage.removeItem('alunoLogado');
+            alert('🚪 Você saiu da Taverna com segurança. Até logo, aventureiro!');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

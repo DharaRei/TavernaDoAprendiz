@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redefinir Senha - Taverna do Aprendiz</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .bg-taverna {
+            background-color: #0b0719;
+            background-image: linear-gradient(rgba(15, 10, 30, 0.35), rgba(15, 10, 30, 0.65)), url(../assests/img/fundo-tavernaDoAprendiz.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 bg-taverna min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Moldura Central -->
+    <div class="w-full max-w-sm bg-slate-900/90 backdrop-blur-md border-2 border-amber-500/80 rounded-3xl p-6 shadow-[0_0_40px_rgba(0,0,0,0.9)]">
+        
+        <!-- Cabeçalho -->
+        <div class="text-center mb-6">
+            <span class="text-3xl">🔮</span>
+            <h1 class="text-xl font-bold text-amber-100 mt-2">Nova Senha </h1>
+            <p class="text-xs text-amber-200/70 mt-1">Informe seu e-mail e defina sua nova chave de acesso</p>
+        </div>
+
+        <form id="form-redefinir" onsubmit="redefinirSenha(event)" class="space-y-4">
+            
+            <!-- Campo E-mail -->
+            <div class="relative flex items-center">
+                <span class="absolute left-3.5 text-amber-400 text-sm">✉️</span>
+                <input type="email" id="email" required placeholder="E-mail institucional" 
+                    class="w-full bg-slate-950/80 border border-amber-500/40 focus:border-amber-400 text-amber-50 placeholder-amber-200/40 rounded-xl py-2.5 pl-10 pr-3 text-sm outline-none transition-all">
+            </div>
+
+            <!-- Nova Senha -->
+            <div class="relative flex items-center">
+                <span class="absolute left-3.5 text-amber-400 text-sm">🔒</span>
+                <input type="password" id="nova-senha" required placeholder="Nova Senha Secreta" 
+                    class="w-full bg-slate-950/80 border border-amber-500/40 focus:border-amber-400 text-amber-50 placeholder-amber-200/40 rounded-xl py-2.5 pl-10 pr-3 text-sm outline-none transition-all">
+            </div>
+
+            <!-- Confirmar Nova Senha -->
+            <div class="relative flex items-center">
+                <span class="absolute left-3.5 text-amber-400 text-sm">🔑</span>
+                <input type="password" id="confirma-senha" required placeholder="Confirme a Nova Senha" 
+                    class="w-full bg-slate-950/80 border border-amber-500/40 focus:border-amber-400 text-amber-50 placeholder-amber-200/40 rounded-xl py-2.5 pl-10 pr-3 text-sm outline-none transition-all">
+            </div>
+
+            <!-- Botão Salvar -->
+            <button type="submit" 
+                class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-700 via-purple-600 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 text-amber-100 font-extrabold text-base border border-amber-400 shadow-[0_0_15px_rgba(147,51,234,0.5)] transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2 mt-2">
+                <span>✦</span>  Nova Senha <span>✦</span>
+            </button>
+        </form>
+
+        <!-- Voltar para o Login -->
+        <div class="mt-5 text-center border-t border-amber-500/20 pt-4">
+            <p class="text-amber-200/70 text-xs">
+                Voltar para o Login 
+                <a href="index.html" class="text-amber-400 font-bold hover:underline ml-1">Faça Login</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Rodapé Oficial -->
+    <footer class="w-full text-center py-2 bg-slate-950/60 backdrop-blur-sm border-t border-amber-500/20 mt-4">
+        <p class="text-amber-200/80 text-xs font-medium">
+            © por Dhara Rei  • Projeto para Global Solution Citizen Tech (Novembro/2026)
+        </p>
+    </footer>
+
+    <!-- Script de Validação e Envio -->
+    <script>
+async function redefinirSenha(event) {
+        event.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('nova-senha').value;
+        const confirmaSenha = document.getElementById('confirma-senha').value;
+
+        if (senha !== confirmaSenha) {
+            alert('❌ As senhas mágicas não coincidem. Verifique os campos!');
+            return;
+        }
+
+        const dadosAtualizacao = { email, senha };
+
+        try {
+            const resposta = await fetch('http://localhost:8081/professores/atualizar-senha', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dadosAtualizacao)
+            });
+
+            if (resposta.ok) {
+                alert('✨ Sua senha mágica foi atualizada e salva no banco de dados com sucesso!');
+                window.location.href = 'index.html';
+            } else {
+                alert('❌ E-mail não encontrado no reino dos professores.');
+            }
+        } catch (erro) {
+            console.error('Erro de conexão:', erro);
+            alert('⚠️ O servidor backend está inacessível.');
+        }
+    }
+    </script>
+</body>
+</html>

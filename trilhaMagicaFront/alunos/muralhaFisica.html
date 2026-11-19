@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muralha do Físico - Laboratório de Circuitos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        body { font-family: 'Inter', sans-serif; }
+
+        .bg-muralha-lab {
+            background-color: #070510;
+            background-image: radial-gradient(circle at center, rgba(147, 51, 234, 0.08) 0%, rgba(7, 5, 16, 0.98) 100%);
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-animado {
+            animation: fadeInModal 0.4s ease-out forwards;
+        }
+
+        @keyframes acenderFilamento {
+            0% { filter: drop-shadow(0 0 2px rgba(250,204,21,0.3)); stroke: #ca8a04; }
+            100% { filter: drop-shadow(0 0 20px rgba(250,204,21,0.95)); stroke: #fde047; }
+        }
+        .filamento-aceso {
+            animation: acenderFilamento 0.8s infinite alternate ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 bg-muralha-lab min-h-screen flex flex-col justify-between text-slate-100 overflow-hidden relative">
+
+    <!-- MODAL DE BOAS-VINDAS DO Eduardo -->
+    <div id="modal-boas-vindas" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md">
+        <div class="w-full max-w-lg bg-slate-900 border-2 border-purple-500 rounded-3xl overflow-hidden shadow-[0_0_60px_rgba(147,51,234,0.5)] modal-animado flex flex-col max-h-[90vh]">
+            
+            <div class="bg-slate-950 py-3 px-6 text-center border-b border-purple-500/30 flex-shrink-0">
+                <h2 class="font-playfair text-base font-bold text-pink-200">
+                    Fortaleza do Físico • 8º Ano
+                </h2>
+                <span class="text-[10px] font-semibold tracking-wider text-orange-400 uppercase">
+                    Experiência do dia: "Acenda a Fortaleza" ⚡
+                </span>
+            </div>
+
+            <div class="w-full h-48 relative overflow-hidden bg-slate-950 border-b border-purple-500/30 flex-shrink-0">
+                <img src="../assests/img/cardboasvindasfisica.jpn.jpg" alt="Raphael no Laboratório" class="w-full h-full object-cover object-center">
+            </div>
+
+            <div class="p-5 bg-slate-900 flex flex-col gap-4 overflow-y-auto">
+                <div class="bg-slate-950/90 border border-purple-500/30 rounded-2xl p-4">
+                    <p class="text-xs md:text-sm text-pink-100/95 leading-relaxed font-playfair italic">
+                        "E aí, Aprendiz! Eu sou o <strong>Eduardo</strong>, o Engenheiro da Fortaleza! Vamos montar uma lâmpada real do zero hoje?<br><br>
+                        Leia com atenção a descrição de cada componente na gaveta, selecione os corretos para a mesa e, se errar, basta clicar no item na bancada para removê-lo. Vamos lá!"
+                    </p>
+                </div>
+
+                <button onclick="fecharModalBoasVindas()" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 hover:opacity-90 text-slate-950 font-extrabold text-sm shadow-[0_0_15px_rgba(147,51,234,0.5)] transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2 flex-shrink-0">
+                    <span>⚡</span> COMEÇAR EXPERIMENTO <span>⚡</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DO BOTÃO PROJETAR -->
+    <div id="modal-projetar" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md">
+        <div class="w-full max-w-lg bg-slate-900 border-2 border-purple-500 rounded-3xl overflow-hidden shadow-[0_0_60px_rgba(147,51,234,0.6)] modal-animado p-6 text-center flex flex-col items-center gap-4">
+            <span class="text-3xl">🔮</span>
+            <h3 class="font-playfair text-lg font-bold text-pink-200">Projeção Mágica da Lâmpada</h3>
+            <p id="texto-projecao" class="text-xs text-purple-200 leading-relaxed">
+                Analisando os materiais na mesa de engenharia...
+            </p>
+            
+            <div id="conteudo-projecao" class="w-full h-64 bg-slate-950 rounded-2xl border border-purple-500/40 flex items-center justify-center relative overflow-hidden my-2 shadow-inner">
+                <!-- Vídeo injetado dinamicamente -->
+            </div>
+
+            <button onclick="fecharModalProjetar()" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs cursor-pointer shadow-md">
+                Voltar à Bancada
+            </button>
+        </div>
+    </div>
+
+    <!-- BARRA SUPERIOR  -->
+    <header class="w-full bg-slate-900/90 backdrop-blur-md border-b border-purple-500/30 px-6 py-2.5 flex items-center justify-between z-30 shadow-lg">
+        <div class="flex items-center gap-4">
+            <a href="menuAluno.html" class="flex items-center gap-2 text-xs bg-slate-950/80 border border-purple-500/40 px-3 py-1.5 rounded-xl text-purple-200">
+                <span>◀ Voltar ao Mapa</span>
+            </a>
+            <div>
+                <h1 class="font-playfair text-pink-200 text-sm font-bold">Muralha do Físico • Laboratório de Automação</h1>
+                <p class="text-[10px] text-purple-400/80">Projeto: Construção e Acendimento da Lâmpada Incandescente</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button onclick="executarProjecao()" class="px-4 py-1.5 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-500/50 text-purple-200 text-xs font-bold shadow-md cursor-pointer flex items-center gap-1.5">
+                <span>⚙️ Projetar</span>
+            </button>
+            <button onclick="simularCircuito()" class="px-5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 text-white text-xs font-bold shadow-[0_0_15px_rgba(16,185,129,0.4)] cursor-pointer flex items-center gap-2">
+                <span>▶ Simular</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- INTERFACE PRINCIPAL  -->
+    <div class="flex-grow flex flex-col md:flex-row overflow-hidden relative">
+
+        <!-- COLUNA 1: GAVETA DE MATERIAIS -->
+        <aside class="w-full md:w-80 flex-shrink-0 bg-slate-900/90 backdrop-blur-md border-r border-purple-500/30 p-4 flex flex-col gap-3 overflow-y-auto z-20 max-h-[calc(100vh-110px)]">
+            <div class="flex items-center justify-between border-b border-purple-500/20 pb-2">
+                <h2 class="text-xs font-bold text-pink-300 uppercase tracking-wider">🛠️ Gaveta de Materiais</h2>
+                <span class="text-[10px] text-purple-400 font-semibold">Clique para Enviar à Mesa</span>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <span class="text-[10px] font-bold text-purple-300 uppercase mt-1">⚡ Lista de Materiais:</span>
+                
+                <div onclick="alternarItemMesa('Bateria 9V', true, '../assests/img/bteria.jpn.webp')" class="bg-slate-950 hover:bg-purple-950/40 border border-purple-500/30 hover:border-purple-400 p-2.5 rounded-xl flex items-center gap-3 cursor-pointer transition-all shadow-md group">
+                    <div class="w-10 h-10 rounded-lg bg-slate-900 border border-purple-500/40 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <img src="../assests/img/bteria.jpn.webp" alt="Bateria 9V" class="w-full h-full object-contain">
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="text-xs font-bold text-pink-200 block truncate">Bateria 9V</span>
+                        <span class="text-[9px] text-purple-300/80 block leading-tight">Ideal para aparelhos que exigem maior potência ou autonomia contínua.</span>
+                    </div>
+                </div>
+
+                <div onclick="alternarItemMesa('Ímã de Neodímio', false, '../assests/img/ima.png')" class="bg-slate-950 hover:bg-purple-950/40 border border-purple-500/30 hover:border-purple-400 p-2.5 rounded-xl flex items-center gap-3 cursor-pointer transition-all shadow-md group">
+                    <div class="w-10 h-10 rounded-lg bg-slate-900 border border-purple-500/40 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <img src="../assests/img/ima.jpn.webp" alt="Ímã" class="w-full h-full object-contain">
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="text-xs font-bold text-slate-300 block truncate">Ímã de Neodímio</span>
+                        <span class="text-[9px] text-purple-300/80 block leading-tight">Ímãs permanentes mais potentes do mundo.</span>
+                    </div>
+                </div>
+
+                <div onclick="alternarItemMesa('Filamento de Tungstênio', true, '../assests/img/tungstenio.png')" class="bg-slate-950 hover:bg-purple-950/40 border border-purple-500/30 hover:border-purple-400 p-2.5 rounded-xl flex items-center gap-3 cursor-pointer transition-all shadow-md group">
+                    <div class="w-10 h-10 rounded-lg bg-slate-900 border border-purple-500/40 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <img src="../assests/img/filamento.jpn.jpg" alt="Filamento" class="w-full h-full object-contain">
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="text-xs font-bold text-pink-200 block truncate">Filamento de Tungstênio</span>
+                        <span class="text-[9px] text-purple-300/80 block leading-tight">Fio metálico de alta pureza, suporta temperaturas elevadas.</span>
+                    </div>
+                </div>
+
+                <div onclick="alternarItemMesa('Painel Solar 5W', false, '../assests/img/painelsolar.png')" class="bg-slate-950 hover:bg-purple-950/40 border border-purple-500/30 hover:border-purple-400 p-2.5 rounded-xl flex items-center gap-3 cursor-pointer transition-all shadow-md group">
+                    <div class="w-10 h-10 rounded-lg bg-slate-900 border border-purple-500/40 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <img src="../assests/img/painelsolar5w.jpn.jpg" alt="Painel Solar" class="w-full h-full object-contain">
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="text-xs font-bold text-slate-300 block truncate">Painel Solar 5W</span>
+                        <span class="text-[9px] text-purple-300/80 block leading-tight">Painel fotovoltaico para baixa potência.</span>
+                    </div>
+                </div>
+
+                <div onclick="alternarItemMesa('Bulbo com Gás Argônio', true, '../assests/img/bulbo.png')" class="bg-slate-950 hover:bg-purple-950/40 border border-purple-500/30 hover:border-purple-400 p-2.5 rounded-xl flex items-center gap-3 cursor-pointer transition-all shadow-md group">
+                    <div class="w-10 h-10 rounded-lg bg-slate-900 border border-purple-500/40 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <img src="../assests/img/bulbo.jpn.webp" alt="Bulbo" class="w-full h-full object-contain">
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="text-xs font-bold text-pink-200 block truncate">Bulbo com Gás Argônio</span>
+                        <span class="text-[9px] text-purple-300/80 block leading-tight">Bulbo de vidro com argônio como gás inerte.</span>
+                    </div>
+                </div>
+
+                <div onclick="alternarItemMesa('Soquete', true, '../assests/img/soquete.png')" class="bg-slate-950 hover:bg-purple-950/40 border border-purple-500/30 hover:border-purple-400 p-2.5 rounded-xl flex items-center gap-3 cursor-pointer transition-all shadow-md group">
+                    <div class="w-10 h-10 rounded-lg bg-slate-900 border border-purple-500/40 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <img src="../assests/img/soquete.jpn.webp" alt="Soquete" class="w-full h-full object-contain">
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="text-xs font-bold text-pink-200 block truncate">Soquete</span>
+                        <span class="text-[9px] text-purple-300/80 block leading-tight">Componente para encaixar, fixar ou conectar.</span>
+                    </div>
+                </div>
+
+                <div onclick="alternarItemMesa('Haste de sustentação', true, '../assests/img/bulbo.png')" class="bg-slate-950 hover:bg-purple-950/40 border border-purple-500/30 hover:border-purple-400 p-2.5 rounded-xl flex items-center gap-3 cursor-pointer transition-all shadow-md group">
+                    <div class="w-10 h-10 rounded-lg bg-slate-900 border border-purple-500/40 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <img src="../assests/img/hastedesustentação.jpn.webp" alt="Haste" class="w-full h-full object-contain">
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="text-xs font-bold text-pink-200 block truncate">Haste de sustentação</span>
+                        <span class="text-[9px] text-purple-300/80 block leading-tight">Fios metálicos presos a uma haste central.</span>
+                    </div>
+                </div>
+
+                <div onclick="alternarItemMesa('Motor CC 12V', false, '../assests/img/motor.png')" class="bg-slate-950 hover:bg-purple-950/40 border border-purple-500/30 hover:border-purple-400 p-2.5 rounded-xl flex items-center gap-3 cursor-pointer transition-all shadow-md group">
+                    <div class="w-10 h-10 rounded-lg bg-slate-900 border border-purple-500/40 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <img src="../assests/img/motorCC12V.jpn.webp" alt="Motor" class="w-full h-full object-contain">
+                    </div>
+                    <div class="overflow-hidden">
+                        <span class="text-xs font-bold text-slate-300 block truncate">Motor CC 12V</span>
+                        <span class="text-[9px] text-purple-300/80 block leading-tight">Transforma energia elétrica em rotação.</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- COLUNA 2: BANCADA DE MONTAGEM -->
+        <main class="flex-grow bg-slate-950/95 p-6 flex flex-col items-center justify-center relative overflow-hidden">
+            
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e1b4b12_1px,transparent_1px),linear-gradient(to_bottom,#1e1b4b12_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+
+            <div class="absolute top-6 right-6 bg-slate-900 border-2 border-purple-500/50 rounded-2xl p-4 text-center shadow-2xl z-10 w-52">
+                <p class="text-[10px] text-purple-300 font-bold mb-2 uppercase">Lâmpada da Fortaleza</p>
+                
+                <div class="w-20 h-24 mx-auto mb-2 flex items-center justify-center">
+                    <svg id="svg-lampada-real" class="w-full h-full drop-shadow-[0_0_5px_rgba(255,255,255,0.1)] transition-all" viewBox="0 0 100 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 10C30 10 15 25 15 45C15 58 24 70 35 77V95H65V77C76 70 85 58 85 45C85 25 70 10 50 10Z" stroke="#cbd5e1" stroke-width="3" fill="#1e293b" fill-opacity="0.4"/>
+                        <path id="svg-filamento" d="M42 65L44 50L48 55L52 45L56 55L58 50L60 65" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M35 95H65V110H35V95Z" fill="#64748b"/>
+                        <path d="M38 110H62V125H38V110Z" fill="#475569"/>
+                        <path d="M45 125H55V135H45V125Z" fill="#334155"/>
+                    </svg>
+                </div>
+
+                <span id="status-portal-txt" class="text-xs font-bold text-orange-400">APAGADO 🌑</span>
+            </div>
+
+            <div class="w-full max-w-2xl h-[420px] bg-slate-900/90 border-2 border-purple-500/40 rounded-3xl p-6 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative flex flex-col items-center justify-center z-10">
+                <span class="absolute top-4 left-6 text-xs font-bold text-purple-300 tracking-wider uppercase">Mesa de Engenharia (Clique no card para remover)</span>
+                
+                <div id="bancada-pecas" class="w-full h-full flex flex-wrap items-center justify-center gap-3 border-2 border-dashed border-purple-500/20 rounded-2xl p-4 overflow-y-auto mt-4">
+                    <div id="aviso-vazio" class="text-center text-purple-400/60 text-xs">
+                        <span class="text-4xl block mb-2">💡</span>
+                        A mesa está vazia. Clique nos componentes na gaveta para posicioná-los!
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- COLUNA 3: PAINEL DE CONTROLE -->
+        <aside class="w-full md:w-72 flex-shrink-0 bg-slate-900/90 backdrop-blur-md border-l border-purple-500/30 p-4 flex flex-col gap-4 z-20">
+            <div class="border-b border-purple-500/20 pb-2">
+                <h2 class="text-xs font-bold text-pink-300 uppercase tracking-wider">⚙️ Diagnóstico</h2>
+            </div>
+
+            <div class="bg-slate-950/90 border border-purple-500/30 rounded-2xl p-3.5 space-y-3">
+                <div>
+                    <label class="text-[10px] text-purple-400 block mb-1">Montagem da Lâmpada:</label>
+                    <span id="status-circuito" class="text-xs font-bold text-orange-400">Incompleta (0/4 peças)</span>
+                </div>
+                <div>
+                    <label class="text-[10px] text-purple-400 block mb-1">Temperatura do Filamento:</label>
+                    <span id="temp-filamento" class="text-xs font-bold text-pink-200">25 °C (Ambiente)</span>
+                </div>
+            </div>
+
+            <div class="mt-auto bg-slate-950/80 border border-purple-500/30 rounded-2xl p-3.5">
+                <p class="text-[11px] font-bold text-pink-300 mb-1">💡 Dica do Raphael:</p>
+                <p class="text-[10px] text-purple-200/80 leading-relaxed">
+                    Selecione apenas os componentes corretos para acender a lâmpada da Fortaleza e clique em "Projetar"!
+                </p>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- RODAPÉ -->
+    <footer class="w-full text-center py-2 bg-slate-950/80 border-t border-purple-500/20 z-30">
+        <p class="text-purple-200/60 text-[11px] font-medium">
+            © 2026 Dhara Rei • Global Solution Citizen Tech (Novembro/2026)
+        </p>
+    </footer>
+
+    <!-- LÓGICA DO LABORATÓRIO -->
+    <script>
+        function fecharModalBoasVindas() {
+            document.getElementById('modal-boas-vindas').style.display = 'none';
+        }
+
+        let itensNaMesa = [];
+
+        const imagensComponentes = {
+            'Bateria 9V': '../assests/img/bteria.jpn.webp',
+            'Ímã de Neodímio': '../assests/img/ima.jpn.webp',
+            'Filamento de Tungstênio': '../assests/img/filamento.jpn.jpg',
+            'Painel Solar 5W': '../assests/img/painelsolar5w.jpn.jpg',
+            'Bulbo com Gás Argônio': '../assests/img/bulbo.jpn.webp',
+            'Soquete': '../assests/img/soquete.jpn.webp',
+            'Haste de sustentação': '../assests/img/hastedesustentação.jpn.webp',
+            'Motor CC 12V': '../assests/img/motorCC12V.jpn.webp'
+        };
+
+        function alternarItemMesa(nomePeca, ehCorreto, elementHtml) {
+            
+            const cardGaveta = event.currentTarget;
+            const imgElement = cardGaveta.querySelector('img');
+            const imagemSrc = imgElement ? imgElement.src : '../assests/img/placeholder.png';
+
+            const index = itensNaMesa.findIndex(item => item.nome === nomePeca);
+            
+            if (index !== -1) {
+                itensNaMesa.splice(index, 1);
+            } else {
+                itensNaMesa.push({ nome: nomePeca, ehCorreto: ehCorreto, imagem: imagemSrc });
+            }
+
+            renderizarMesa();
+            atualizarPainel();
+        }
+
+        function renderizarMesa() {
+            const bancada = document.getElementById('bancada-pecas');
+            bancada.innerHTML = "";
+
+            if (itensNaMesa.length === 0) {
+                bancada.innerHTML = `
+                    <div id="aviso-vazio" class="text-center text-purple-400/60 text-xs">
+                        <span class="text-4xl block mb-2">💡</span>
+                        A mesa está vazia. Clique nos componentes na gaveta para posicioná-los!
+                    </div>
+                `;
+                return;
+            }
+
+            itensNaMesa.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "w-32 h-36 bg-slate-900 border-2 border-purple-500/60 hover:border-red-400 rounded-2xl p-3 flex flex-col items-center justify-between gap-1 shadow-xl cursor-pointer transition-all relative group";
+                card.title = `Remover ${item.nome}`;
+                
+                card.innerHTML = `
+                    <div class="w-full h-20 flex items-center justify-center overflow-hidden bg-slate-100 rounded-xl p-1.5 border border-purple-400/50 shadow-inner">
+                        <img src="${item.imagem}" alt="${item.nome}" class="w-full h-full object-contain">
+                    </div>
+                    <span class="text-[10px] font-bold text-pink-200 truncate w-full text-center px-1">${item.nome}</span>
+                    <div class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity shadow-md">✕</div>
+                `;
+
+                card.onclick = () => {
+                    alternarItemMesa(item.nome, item.ehCorreto, item.imagem);
+                };
+
+                bancada.appendChild(card);
+            });
+        }
+
+        function atualizarPainel() {
+            const status = document.getElementById('status-circuito');
+            const temperatura = document.getElementById('temp-filamento');
+
+            const corretas = itensNaMesa.filter(i => i.ehCorreto);
+            const erradas = itensNaMesa.filter(i => !i.ehCorreto);
+
+            if (erradas.length > 0) {
+                status.innerText = "Atenção: Há componente inadequado!";
+                status.className = "text-xs font-bold text-orange-400";
+            } else if (corretas.length === 4) {
+                status.innerText = "Todas as 4 peças corretas!";
+                status.className = "text-xs font-bold text-emerald-400";
+                temperatura.innerText = "300 °C (Em espera)";
+            } else {
+                status.innerText = `Incompleta (${corretas.length}/4 peças)`;
+                status.className = "text-xs font-bold text-orange-400";
+                temperatura.innerText = "25 °C (Ambiente)";
+            }
+        }
+
+        function executarProjecao() {
+            const modal = document.getElementById('modal-projetar');
+            const texto = document.getElementById('texto-projecao');
+            const conteudoProjecao = document.getElementById('conteudo-projecao');
+            
+            modal.classList.remove('hidden');
+
+            const corretas = itensNaMesa.filter(i => i.ehCorreto);
+            const erradas = itensNaMesa.filter(i => !i.ehCorreto);
+
+            if (erradas.length > 0 || corretas.length < 4) {
+                texto.innerText = "⚠️ O Raphael analisou a projeção e viu que faltam peças ou há componentes incorretos na mesa! Volte e selecione os materiais certos.";
+                conteudoProjecao.innerHTML = `
+                    <div class="flex flex-col items-center justify-center p-6 text-center">
+                        <span class="text-5xl mb-2">⚠️</span>
+                        <span class="text-xs font-bold text-orange-400">Montagem Incorreta ou Incompleta</span>
+                    </div>
+                `;
+            } else {
+                texto.innerText = "✨ Incrível! Os materiais se acoplaram perfeitamente e formaram a lâmpada incandescente da Fortaleza!";
+                
+                conteudoProjecao.innerHTML = `
+                    <video id="video-projecao" class="w-full h-full object-cover rounded-xl" autoplay loop muted playsinline>
+                        <source src="../assests/video/ep1muralhaDaFisica.mp4" type="video/mp4">
+                        Seu navegador não suporta vídeos HTML5.
+                    </video>
+                    <button id="btn-som" onclick="alternarAudio()" class="absolute bottom-4 right-4 bg-purple-900/80 hover:bg-purple-800 text-pink-200 border border-purple-400/50 px-3 py-1.5 rounded-xl text-xs font-bold shadow-lg backdrop-blur-sm cursor-pointer flex items-center gap-1.5 transition-all">
+                        <span>🔇 Ativar Som</span>
+                    </button>
+                `;
+                
+                const vid = document.getElementById('video-projecao');
+                if(vid) {
+                    vid.load();
+                    vid.play().catch(e => console.log("Autoplay bloqueado:", e));
+                }
+            }
+        }
+
+        function alternarAudio() {
+            const vid = document.getElementById('video-projecao');
+            const btn = document.getElementById('btn-som');
+            
+            if (vid) {
+                if (vid.muted) {
+                    vid.muted = false;
+                    btn.innerHTML = "<span>🔊 Desativar Som</span>";
+                    btn.className = "absolute bottom-4 right-4 bg-emerald-950/90 hover:bg-emerald-900 text-emerald-200 border border-emerald-400/50 px-3 py-1.5 rounded-xl text-xs font-bold shadow-lg backdrop-blur-sm cursor-pointer flex items-center gap-1.5 transition-all";
+                } else {
+                    vid.muted = true;
+                    btn.innerHTML = "<span>🔇 Ativar Som</span>";
+                    btn.className = "absolute bottom-4 right-4 bg-purple-900/80 hover:bg-purple-800 text-pink-200 border border-purple-400/50 px-3 py-1.5 rounded-xl text-xs font-bold shadow-lg backdrop-blur-sm cursor-pointer flex items-center gap-1.5 transition-all";
+                }
+            }
+        }
+
+        function fecharModalProjetar() {
+            const vid = document.getElementById('video-projecao');
+            if (vid) {
+                vid.pause(); 
+            }
+            document.getElementById('modal-projetar').classList.add('hidden');
+        }
+
+        function simularCircuito() {
+            const filamentoSvg = document.getElementById('svg-lampada-real');
+            const statusPortal = document.getElementById('status-portal-txt');
+            const temperatura = document.getElementById('temp-filamento');
+
+            const corretas = itensNaMesa.filter(i => i.ehCorreto);
+            const erradas = itensNaMesa.filter(i => !i.ehCorreto);
+
+            if (erradas.length > 0) {
+                alert('❌ O Raphael analisou a bancada e percebeu que você incluiu componentes inadequados. Clique neles na mesa para removê-los!');
+                return;
+            }
+
+            if (corretas.length === 4) {
+                statusPortal.innerText = "ACESO & FUNCIONANDO ✨";
+                statusPortal.className = "text-xs font-bold text-emerald-400";
+                temperatura.innerText = "2.500 °C (Incandescente)";
+
+                alert('🎉 PERFEITO, ENGENHEIRO! O circuito fechou e o portão abriu! +30 XP!');
+            } else {
+                alert('❌ O circuito está incompleto! Selecione os 4 componentes.');
+            }
+        }
+    </script>
+</body>
+</html>

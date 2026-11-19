@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaptar Plano com IA - Trilha Mágica</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
+    
+    <!-- Fontes do Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rosePastel: '#F2a7b5',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #FDF2F4 !important; 
+            color: #382933 !important; 
+        }
+        .details-text { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-rosePastel selection:text-slate-900">
+
+    <!-- Cabeçalho -->
+    <header class="w-full bg-[#FCEDF0]/90 backdrop-blur-md border-b border-rose-200/60 py-4 px-6 flex justify-between items-center shadow-sm">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">✨</span>
+            <div>
+                <h2 class="text-rose-950 font-bold text-base tracking-wide">Olá bem vindo ao espaço integrado com a ANGEL nossa IA</h2>
+                <p class="details-text text-xs text-rose-800/70">Adaptação Pedagógica com IA</p>
+            </div>
+        </div>
+        <a href="painel-professor.html" class="px-4 py-2 rounded-xl bg-rose-100 hover:bg-rose-200 border border-rose-300 text-rose-950 text-xs font-semibold transition-all flex items-center gap-2 cursor-pointer shadow-sm">
+            <span>←</span> Voltar ao Menu
+        </a>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow flex flex-col items-center p-6 my-4">
+        
+        <div class="w-full max-w-3xl bg-[#FFFBF7] border border-rose-200/50 rounded-3xl p-8 md:p-10 shadow-[0_10px_35px_rgba(150,80,100,0.06)]">
+            
+            <div class="text-center mb-8">
+                <span class="text-4xl">🔮</span>
+                <h1 class="text-3xl font-bold text-rose-950 mt-2 mb-2">Angel te ajuda</h1>
+                <p class="details-text text-sm text-rose-900/80">Envie o plano de aula em PDF e peça sugestões de adaptação inclusiva ou gincanas para a sua turma.</p>
+            </div>
+
+            <!-- Formulário de Envio para a IA -->
+            <form id="form-ia" onsubmit="enviarParaIA(event)" class="space-y-6">
+                
+                <!-- Seleção da Matéria -->
+                <div>
+                    <label class="block text-xs font-semibold text-rose-900 uppercase tracking-wider mb-2">Matéria / Disciplina</label>
+                    <select id="materia" required class="w-full bg-[#FFF6F0] border border-rose-200 focus:border-rose-400 text-rose-950 rounded-xl py-3 px-4 text-sm outline-none transition-all cursor-pointer">
+                        <option value="" disabled selected>Selecione a Matéria</option>
+                        <option value="MATEMATICA">Matemática</option>
+                        <option value="CIENCIAS">Ciências / Química</option>
+                        <option value="FISICA">Ciências / Física</option>
+                    </select>
+                </div>
+
+                <!-- Campo de Upload do PDF do Plano de Aula -->
+                <div>
+                    <label class="block text-xs font-semibold text-rose-900 uppercase tracking-wider mb-2">Plano de Aula Original (PDF)</label>
+                    <div class="border-2 border-dashed border-rose-300/80 bg-[#FFF6F0]/60 hover:bg-[#FFF6F0] rounded-2xl p-6 text-center cursor-pointer transition-all relative">
+                        <input type="file" id="pdf-plano" accept=".pdf" required class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="mostrarNomeArquivo(this)">
+                        <div id="upload-label" class="flex flex-col items-center">
+                            <span class="text-3xl mb-2">📄</span>
+                            <p class="text-sm font-semibold text-rose-950">Clique para enviar ou arraste o PDF aqui</p>
+                            <p class="details-text text-xs text-rose-800/60 mt-1">A IA fará a leitura para extrair o conteúdo base</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campo de Texto / Pedido do Professor -->
+                <div>
+                    <label class="block text-xs font-semibold text-rose-900 uppercase tracking-wider mb-2">Instruções para a IA (Adaptação para alunos atípicos ou Gincanas)</label>
+                    <textarea id="textoOriginal" rows="4" required placeholder="Ex: Adapte este plano para um aluno com TEA nível 1 de suporte, incluindo elementos visuais, ou sugira uma gincana interativa..." 
+                        class="w-full bg-[#FFF6F0] border border-rose-200 focus:border-rose-400 text-rose-950 placeholder-rose-900/40 rounded-xl p-4 text-sm outline-none transition-all resize-none"></textarea>
+                </div>
+
+                <!-- Botão de Envio Mágico -->
+                <button type="submit" 
+                    class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-700 via-indigo-600 to-purple-800 hover:from-purple-600 hover:to-indigo-500 text-white font-bold text-sm tracking-wide shadow-[0_4px_20px_rgba(147,51,234,0.3)] transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2">
+                    <span>✨</span> Me ajuda Angel
+                </button>
+            </form>
+
+            <!-- Área de Resposta da IA (Oculta inicialmente) -->
+            <div id="resultado-ia" class="hidden mt-8 p-6 rounded-2xl bg-purple-50/70 border border-purple-200">
+                <h3 class="font-bold text-purple-950 text-base mb-2 flex items-center gap-2">
+                    <span>📜</span> Plano Adaptado pela Angel
+                </h3>
+                <div id="resposta-texto" class="details-text text-sm text-purple-900/90 leading-relaxed whitespace-pre-wrap">
+                    <!-- Resposta da API do Spring Boot aparecerá aqui -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Rodapé Oficial -->
+    <footer class="w-full text-center py-4 bg-[#FCEDF0] border-t border-rose-200/60 mt-6">
+        <p class="details-text text-xs text-rose-800/70">
+            © Dhara Rei  • Global Solution Citizen Tech (Novembro/2026)[cite: 1]
+        </p>
+    </footer>
+
+    <!-- Script de Integração com o Backend -->
+    <script>
+        function mostrarNomeArquivo(input) {
+            const label = document.getElementById('upload-label');
+            if (input.files && input.files[0]) {
+                const nome = input.files[0].name;
+                label.innerHTML = `
+                    <span class="text-3xl mb-2">✅</span>
+                    <p class="text-sm font-semibold text-emerald-800">Arquivo selecionado:</p>
+                    <p class="details-text text-xs text-rose-900 font-bold mt-1">${nome}</p>
+                `;
+            }
+        }
+
+        async function enviarParaIA(event) {
+            event.preventDefault();
+
+            const materia = document.getElementById('materia').value;
+            const instrucoes = document.getElementById('textoOriginal').value;
+            const arquivoPdf = document.getElementById('pdf-plano').files[0];
+
+            // Exibindo feedback visual de carregamento
+            const resultadoDiv = document.getElementById('resultado-ia');
+            const respostaTexto = document.getElementById('resposta-texto');
+            resultadoDiv.classList.remove('hidden');
+            respostaTexto.innerHTML = "🔮 A Angel está lendo o pergaminho em PDF e adaptando o plano pedagógico... Aguarde um instante.";
+
+            // Criando o FormData para enviar os dados de texto e o arquivo PDF juntos (multipart/form-data)
+            const formData = new FormData();
+            formData.append('materia', materia);
+            formData.append('textoOriginal', instrucoes);
+            if (arquivoPdf) {
+                formData.append('file', arquivoPdf);
+            }
+
+            try {
+                const resposta = await fetch('http://localhost:8081/ai/adaptar', {
+                    method: 'POST',
+                    body: formData 
+                });
+
+                if (resposta.ok) {
+                    const dadosRetorno = await resposta.json();
+                    // Exibe a resposta retornada pelo backend do Spring Boot
+                    respostaTexto.innerHTML = dadosRetorno.respostaAdaptada || dadosRetorno.conteudoAdaptado || JSON.stringify(dadosRetorno, null, 2);
+                } else {
+                    const erroTexto = await resposta.text();
+                    console.error("Erro do servidor:", erroTexto);
+                    respostaTexto.innerHTML = "❌ A Angel encontrou uma interferência mágica ao processar o PDF. Verifique os logs do console.";
+                }
+            } catch (erro) {
+                console.error('Erro de conexão:', erro);
+                respostaTexto.innerHTML = "⚠️ Não foi possível conectar ao servidor backend na porta 8081.";
+            }
+        }
+    </script>
+</body>
+</html>

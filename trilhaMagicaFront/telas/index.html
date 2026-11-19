@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Taverna do Aprendiz</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .bg-taverna {
+            background-color: #0b0719;
+            background-image: linear-gradient(rgba(15, 10, 30, 0.35), rgba(15, 10, 30, 0.65)), url(../assests/img/fundo-tavernaDoAprendiz.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 bg-taverna min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Moldura Central Ajustada e Mais Compacta -->
+    <div class="w-full max-w-sm mt-48 bg-slate-900/90 backdrop-blur-md border-2 border-amber-500/80 rounded-3xl p-5 shadow-[0_0_40px_rgba(0,0,0,0.9)]">
+        
+        <!-- Abas de Perfil no Topo (Compactas) -->
+        <div class="grid grid-cols-2 gap-2 bg-slate-950/80 p-1.5 rounded-2xl border border-amber-500/30 mb-4">
+            <button type="button" id="btn-aluno" onclick="selecionarPerfil('ALUNO')" 
+                class="py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer bg-amber-400 text-slate-950 shadow-md">
+                🎓 Aluno
+            </button>
+            <button type="button" id="btn-professor" onclick="selecionarPerfil('PROFESSOR')" 
+                class="py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer text-amber-200 hover:text-amber-300">
+                🧙‍♂️ Professor
+                <a href="./cadastroProfessor.html" class="text-amber-400 font-bold hover:underline ml-1"></a>
+            </button>
+        </div>
+
+        <form id="form-login" onsubmit="fazerLogin(event)" class="space-y-3.5">
+
+        <!-- Campo Login / E-mail -->
+        <div class="relative flex items-center">
+        <span class="absolute left-3.5 text-amber-400 text-sm">👤</span>
+        <input type="text" id="email" required placeholder="Login ou E-mail" 
+        class="w-full bg-slate-950/80 border border-amber-500/40 focus:border-amber-400 text-amber-50 placeholder-amber-200/40 rounded-xl py-2.5 pl-10 pr-3 text-sm outline-none transition-all">
+        </div>
+
+            <!-- Campo Senha -->
+            <div class="relative flex items-center">
+                <span class="absolute left-3.5 text-amber-400 text-sm">🔒</span>
+                <input type="password" id="senha" required placeholder="Senha Secreta" 
+                    class="w-full bg-slate-950/80 border border-amber-500/40 focus:border-amber-400 text-amber-50 placeholder-amber-200/40 rounded-xl py-2.5 pl-10 pr-10 text-sm outline-none transition-all">
+                <button type="button" onclick="alternarSenha()" class="absolute right-3 text-amber-300/70 hover:text-amber-300 cursor-pointer text-sm" title="Mostrar/Ocultar Senha">
+                    👁️
+                </button>
+            </div>
+
+            <!-- Botão Entrar  -->
+            <button type="submit" 
+            class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-700 via-purple-600 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 text-amber-100 font-extrabold text-base border border-amber-400 shadow-[0_0_15px_rgba(147,51,234,0.5)] transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2 mt-2">
+            <span>✦</span> Entrar <span>✦</span>
+            </button>
+
+<!-- Link de Esqueci a Senha -->
+<div class="text-right mt-1">
+    <a href="recuperar-senha.html" class="text-xs text-amber-400/80 hover:text-amber-300 hover:underline">Esqueceu a senha mágica?</a>
+</div>
+
+        </form>
+
+        <!-- Link para Cadastro -->
+        <div class="mt-4 text-center border-t border-amber-500/20 pt-3">
+            <p class="text-amber-200/70 text-xs">
+                Ainda não é cadastrado?
+                <a href="../alunos/cadastro-aluno.html" id="link-cadastro" class="text-amber-400 font-bold hover:underline ml-1">Criar Conta</a>
+            </p>
+        </div>
+    </div>
+
+
+<!-- Rodapé Oficial-->
+    <footer class="w-full text-center py-2 bg-slate-950/60 backdrop-blur-sm border-t border-amber-500/20 mt-4">
+        <p class="text-amber-200/80 text-xs font-medium">
+            © 2026 Dhara Rei • Projeto para Global Solution Citizen Tech (Novembro/2026)
+        </p>
+    </footer>
+
+<script>
+    let perfilSelecionado = 'ALUNO';
+
+    function selecionarPerfil(perfil) {
+        perfilSelecionado = perfil;
+        const btnAluno = document.getElementById('btn-aluno');
+        const btnProf = document.getElementById('btn-professor');
+        const linkCadastro = document.getElementById('link-cadastro');
+
+        if (perfil === 'ALUNO') {
+            btnAluno.className = "py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer bg-amber-400 text-slate-950 shadow-md";
+            btnProf.className = "py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer text-amber-200 hover:text-amber-300";
+            
+            // Ajusta o link para o cadastro de aluno
+            linkCadastro.href = "cadastro-aluno.html";
+        } else {
+            btnProf.className = "py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer bg-amber-400 text-slate-950 shadow-md";
+            btnAluno.className = "py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer text-amber-200 hover:text-amber-300";
+            
+            // Ajusta o link para o cadastro de professor 
+            linkCadastro.href = "cadastroProfessor.html";
+        }
+    }
+
+    // Função de login inteligente baseada no perfil selecionado
+    async function fazerLogin(event) {
+        event.preventDefault(); // Evita que a página recarregue sozinha
+
+        const email = document.getElementById('email').value; 
+        const senha = document.getElementById('senha').value; 
+        const credenciais = { email, senha };
+
+        // Define dinamicamente a URL da API dependendo do botão escolhido no topo
+        const rotaEndpoint = perfilSelecionado === 'PROFESSOR' 
+            ? 'http://localhost:8081/professores/login' 
+            : 'http://localhost:8081/alunos/login';
+
+        try {
+            const resposta = await fetch(rotaEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(credenciais)
+            });
+
+            if (resposta.ok) {
+                const usuario = await resposta.json();
+                console.log("Login bem-sucedido:", usuario);
+
+                // Salva os dados e direciona para a splash correta de cada perfil
+                if (perfilSelecionado === 'PROFESSOR') {
+                    localStorage.setItem('professorLogado', JSON.stringify(usuario));
+                    alert('✨ Credenciais confirmadas, Mestre! Bem-vindo de volta.');
+                    window.location.href = '../telas/telaSplash.html'; 
+                } else {
+                    localStorage.setItem('alunoLogado', JSON.stringify(usuario));
+                    alert('✨ Credenciais confirmadas, Aprendiz! Boa jornada.');
+                    window.location.href = '../alunos/telaSplashAluno.html'; 
+                }
+            } else {
+                alert('❌ E-mail ou senha incorretos para este perfil.');
+            }
+        } catch (erro) {
+            console.error('Erro ao conectar com o servidor:', erro);
+            alert('⚠️ O servidor backend está inativo ou inacessível.');
+        }
+    }
+</script>
+</body>
+</html>

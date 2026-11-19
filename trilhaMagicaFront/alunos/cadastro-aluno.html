@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Aventureiro - Taverna do Aprendiz</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .bg-taverna {
+            background-color: #0b0719;
+            background-image: linear-gradient(rgba(15, 10, 30, 0.35), rgba(15, 10, 30, 0.65)), 
+            url(../assests/img/fundoCadastroAlunos.jpn.png);
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 bg-taverna min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Moldura Central Estilo Taverna -->
+    <div class="w-full max-w-lg my-6 bg-slate-900/90 backdrop-blur-md border-2 border-amber-500/80 rounded-3xl p-6 shadow-[0_0_40px_rgba(0,0,0,0.9)]">
+        
+        <!-- Cabeçalho -->
+        <div class="text-center mb-5">
+            <span class="text-3xl">📜</span>
+            <h1 class="text-xl font-bold text-amber-100 mt-1">Registro de Aventureiro</h1>
+            <p class="text-xs text-amber-200/70 mt-1">Inscreva-se na jornada épica da Taverna do Aprendiz</p>
+        </div>
+
+        <form id="form-cadastro-aluno" onsubmit="cadastrarAluno(event)" class="space-y-3.5">
+            
+            <!-- Campo Nome -->
+            <div class="relative flex items-center">
+                <span class="absolute left-3.5 text-amber-400 text-sm">👤</span>
+                <input type="text" id="nome" required placeholder="Nome Completo do Aluno" 
+                    class="w-full bg-slate-950/80 border border-amber-500/40 focus:border-amber-400 text-amber-50 placeholder-amber-200/40 rounded-xl py-2.5 pl-10 pr-3 text-sm outline-none transition-all">
+            </div>
+
+            <!-- Campo E-mail -->
+            <div class="relative flex items-center">
+                <span class="absolute left-3.5 text-amber-400 text-sm">✉️</span>
+                <input type="email" id="email" required placeholder="E-mail de Acesso" 
+                    class="w-full bg-slate-950/80 border border-amber-500/40 focus:border-amber-400 text-amber-50 placeholder-amber-200/40 rounded-xl py-2.5 pl-10 pr-3 text-sm outline-none transition-all">
+            </div>
+
+            <!-- Campo Senha -->
+            <div class="relative flex items-center">
+                <span class="absolute left-3.5 text-amber-400 text-sm">🔒</span>
+                <input type="password" id="senha" required placeholder="Senha Secreta" 
+                    class="w-full bg-slate-950/80 border border-amber-500/40 focus:border-amber-400 text-amber-50 placeholder-amber-200/40 rounded-xl py-2.5 pl-10 pr-10 text-sm outline-none transition-all">
+                <button type="button" onclick="alternarSenha()" class="absolute right-3 text-amber-300/70 hover:text-amber-300 cursor-pointer text-sm" title="Mostrar/Ocultar Senha">
+                    👁️
+                </button>
+            </div>
+
+            <!-- Campo Idade -->
+            <div class="relative flex items-center">
+                <span class="absolute left-3.5 text-amber-400 text-sm">🎂</span>
+                <input type="number" id="idade" required placeholder="Idade" min="1" max="120"
+                    class="w-full bg-slate-950/80 border border-amber-500/40 focus:border-amber-400 text-amber-50 placeholder-amber-200/40 rounded-xl py-2.5 pl-10 pr-3 text-sm outline-none transition-all">
+            </div>
+
+            <!-- Perfil Atípico (AtipicoEnum) -->
+            <div class="relative flex items-center">
+                <span class="absolute left-3.5 text-amber-400 text-sm">⭐</span>
+                <select id="atipico" required 
+                    class="w-full bg-slate-950/80 border border-amber-500/40 focus:border-amber-400 text-amber-50/90 rounded-xl py-2.5 pl-10 pr-3 text-sm outline-none transition-all cursor-pointer">
+                    <option value="" disabled selected>Selecione o Perfil de Aprendizagem</option>
+                    <option value="TEA">Transtorno do Espectro Autista (TEA)</option>
+                    <option value="TDAH">TDAH</option>
+                    <option value="DISLEXIA">Dislexia</option>
+                    <option value="DEFICIENCIA_VISUAL">Deficiência Visual</option>
+                    <option value="DEFICIENCIA_AUDITIVA">Deficiência Auditiva</option>
+                    <option value="OUTROS">Sem Necessidade Atipica</option>
+                </select>
+            </div>
+
+            <!-- Turma -->
+            <div>
+                <label class="block text-xs font-semibold text-purple-200 uppercase tracking-wider mb-1">Turma Atendida</label>
+                <select id="turma" required class="w-full bg-slate-950/70 border border-purple-500/40 focus:border-amber-400 text-slate-100 rounded-xl py-2.5 px-3 text-sm outline-none transition-all cursor-pointer">
+                            <option value="" disabled selected>Selecione a Turma</option>
+                            <option value="TURMA_A">Ensino médio 1° ano turma A </option>
+                            <option value="TURMA_A">Ensino médio 2° ano turma B </option>
+                            <option value="TURMA_A">Ensino médio 3° ano turma C </option>
+                            <option value="TURMA_A">Ensino médio 1° ano aturma B </option>
+                            <option value="TURMA_A">Ensino médio 2° ano aturma C </option>
+                            <option value="TURMA_A">Ensino médio 3° ano aturma A </option>
+                            <option value="TURMA_B">Ensino Fundamental turma 6 serie </option>
+                            <option value="TURMA_C">Ensino Fundamental turma 7 serie </option>
+                            <option value="TURMA_C">Ensino Fundamental turma 8 serie </option>
+                            <option value="TURMA_C">Ensino Fundamental turma 9 serie </option>
+                </select>
+            </div>
+
+            <!-- Botão Cadastrar -->
+            <button type="submit" 
+                class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-700 via-purple-600 to-indigo-700 hover:from-purple-600 
+                hover:to-indigo-600 text-amber-100 font-extrabold text-base border border-amber-400 
+                shadow-[0_0_15px_rgba(147,51,234,0.5)] transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2 mt-4">
+                <span>✦</span> Iniciar Jornada <span>✦</span>
+            </button>
+        </form>
+
+        <!-- Voltar para o Login -->
+        <div class="mt-4 text-center border-t border-amber-500/20 pt-3">
+            <p class="text-amber-200/70 text-xs">
+                Já possui uma conta na Taverna? 
+                <a href="../telas/index.html" class="text-amber-400 font-bold hover:underline ml-1">Entrar</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Rodapé Oficial -->
+    <footer class="w-full text-center py-2 bg-slate-950/60 backdrop-blur-sm border-t border-amber-500/20 mt-2">
+        <p class="text-amber-200/80 text-xs font-medium">
+            © 2026 Dhara Rei • Projeto para Global Solution Citizen Tech (Novembro/2026)
+        </p>
+    </footer>
+
+    <!-- Script de Envio e Funcionalidades -->
+    <script>
+        function alternarSenha() {
+            const inputSenha = document.getElementById('senha');
+            if (inputSenha.type === 'password') {
+                inputSenha.type = 'text';
+            } else {
+                inputSenha.type = 'password';
+            }
+        }
+
+        async function cadastrarAluno(event) {
+            event.preventDefault();
+
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            const idade = parseInt(document.getElementById('idade').value);
+            const atipico = document.getElementById('atipico').value;
+            const turma = document.getElementById('turma').value;
+
+            const novoAluno = { nome, email, senha, idade, atipico, turma };
+
+            try {
+                const resposta = await fetch('http://localhost:8081/alunos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(novoAluno)
+                });
+
+                if (resposta.ok) {
+                    alert('✨ Aventureiro registrado com sucesso na Taverna! Bem-vindo à jornada.');
+                    window.location.href = '../telas/index.html';
+                } else {
+                    alert('❌ Erro ao registrar o aluno. Verifique se o e-mail já foi cadastrado.');
+                }
+            } catch (erro) {
+                console.error('Erro de conexão:', erro);
+                alert('⚠️ O servidor backend está inacessível.');
+            }
+        }
+    </script>
+</body>
+</html>

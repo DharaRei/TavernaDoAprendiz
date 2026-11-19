@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torre do Mago - Episódio 1: O Feitiço do Troco</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        body { font-family: 'Inter', sans-serif; }
+
+        .bg-torre-mat {
+            background-color: #0b0719;
+            background-image: linear-gradient(rgba(11, 7, 25, 0.6), rgba(11, 7, 25, 0.85)),
+            url('../assests/img/padariaep1torrematematicamente.jpn.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 bg-torre-mat min-h-screen flex flex-col justify-between p-4 md:p-6 text-slate-100">
+
+    <!-- BARRA SUPERIOR UNIFICADA (BOTÃO DE VOLTAR + STATUS DO LOGAN) -->
+    <header class="w-full max-w-3xl mx-auto bg-slate-900/90 backdrop-blur-md border-2 border-amber-500/50 rounded-2xl px-6 py-3 flex items-center justify-between shadow-lg z-30">
+        <div class="flex items-center gap-4">
+            <!-- BOTÃO DE VOLTAR AO MAPA -->
+            <a href="menuAluno.html" class="flex items-center gap-2 text-xs bg-slate-950/80 border border-amber-500/40 px-3.5 py-2 rounded-xl text-amber-200 hover:bg-amber-950 transition-all shadow-md">
+                <span>◀ Voltar ao Mapa</span>
+            </a>
+            <div>
+                <h1 class="font-playfair text-amber-100 text-sm font-bold">Torre do Mago • Matemática Mágica</h1>
+                <p class="text-[10px] text-amber-300/80">Episódio 1: "O Feitiço do Troco"</p>
+            </div>
+        </div>
+
+        <!-- PLACAR DE MOEDAS DO LOGAN -->
+        <div class="flex items-center gap-2 bg-slate-950/80 px-4 py-2 rounded-xl border border-amber-500/40">
+            <span class="text-amber-400 text-lg">🪙</span>
+            <div>
+                <span class="text-[10px] text-amber-200/70 block uppercase tracking-wider">Moedas</span>
+                <span id="display-moedas" class="font-bold text-amber-300 text-sm">10,00</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ÁREA CENTRAL DA HISTÓRIA -->
+    <main class="w-full max-w-3xl mx-auto my-auto flex flex-col items-center gap-6">
+        
+        <!-- Indicador do Episódio -->
+        <div class="bg-amber-950/80 border border-amber-500/40 text-amber-200 px-4 py-1 rounded-full text-xs font-semibold tracking-wider uppercase shadow-md">
+            Episódio 1 • "O Feitiço do Troco"
+        </div>
+
+        <!-- Caixa de Diálogo Dinâmica -->
+        <div class="w-full bg-slate-900/95 backdrop-blur-xl border-2 border-amber-500/80 rounded-3xl p-6 md:p-8 shadow-[0_0_40px_rgba(0,0,0,0.8)] relative fade-in">
+            
+            <!-- Personagem / Local Ativo -->
+            <div class="flex items-center gap-3 mb-4 border-b border-amber-500/20 pb-3">
+                <span class="text-2xl" id="icone-personagem">🧙‍♀️</span>
+                <div>
+                    <h3 class="font-playfair text-amber-200 font-bold text-base" id="nome-personagem">Maga Lola</h3>
+                    <p class="text-[11px] text-amber-400/70" id="papel-personagem">Mentora da Taverna</p>
+                </div>
+            </div>
+
+            <!-- Balão de Fala / Texto -->
+            <div class="mb-6 min-h-[100px] flex flex-col justify-center">
+                <p id="texto-falado" class="text-sm md:text-base text-amber-100/95 leading-relaxed font-playfair italic">
+                    "Logan, você é o novo Aprendiz da Taverna, né? Então sua primeira missão é fácil. Pega essas <strong>10,00 moedas de ouro</strong> e compra o Pão Mágico pro Banquete. Ele custa 3,50 moedas. E presta atenção... tem goblin malandro nesse mercado!"
+                </p>
+            </div>
+
+            <!-- Botão de Avançar / Ações -->
+            <div id="area-botoes">
+                <button onclick="proximoPasso()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-extrabold text-sm shadow-md transition-all cursor-pointer">
+                    ▶ Próximo
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="w-full text-center py-2 bg-slate-950/60 backdrop-blur-sm border-t border-amber-500/20">
+        <p class="text-amber-200/60 text-xs font-medium">
+            © 2026 Dhara Rei • Global Solution Citizen Tech (Novembro/2026)
+        </p>
+    </footer>
+
+    <!-- LÓGICA DE DIÁLOGOS PASSO A PASSO -->
+    <script>
+        let etapaAtual = 1;
+
+        function proximoPasso() {
+            etapaAtual++;
+            atualizarTela();
+        }
+
+        function atualizarTela() {
+            const icone = document.getElementById('icone-personagem');
+            const nome = document.getElementById('nome-personagem');
+            const papel = document.getElementById('papel-personagem');
+            const texto = document.getElementById('texto-falado');
+            const botoes = document.getElementById('area-botoes');
+
+            if (etapaAtual === 2) {
+                icone.innerText = '👦🏽';
+                nome.innerText = 'Logan';
+                papel.innerText = 'Aprendiz (10 anos)';
+                texto.innerText = '"Pode deixar, Maga Lola! 10 moedas... pão de 3,50... moleza!"';
+            }
+            else if (etapaAtual === 3) {
+                icone.innerText = '🚶🏽';
+                nome.innerText = 'Narrador';
+                papel.innerText = 'Mercado do Reino';
+                texto.innerHTML = '<em>[Logan vai correndo até a barraquinha no meio da feira e encontra um lojista bem esquisito...]</em>';
+            }
+            else if (etapaAtual === 4) {
+                icone.innerText = '👺';
+                nome.innerText = 'Goblin Malandro';
+                papel.innerText = 'Comerciante do Mercado';
+                texto.innerText = '"Hummm... um aprendiz... Pão Mágico é 3,50! Pode pagar!"';
+            }
+            else if (etapaAtual === 5) {
+                icone.innerText = '👦🏽';
+                nome.innerText = 'Logan';
+                papel.innerText = 'Entregando o dinheiro';
+                texto.innerText = '"Toma, 10 moedas!"';
+            }
+            else if (etapaAtual === 6) {
+                icone.innerText = '👺';
+                nome.innerText = 'Goblin Malandro';
+                papel.innerText = 'Rindo baixinho';
+                texto.innerText = '"Seu troco é... 4,00 moedas. Pode ir! Tchau!"';
+            }
+            else if (etapaAtual === 7) {
+                icone.innerText = '💭';
+                nome.innerText = 'Logan (Pensando)';
+                papel.innerText = 'Momento de dúvida';
+                texto.innerHTML = '"Hmm... espera... Eu paguei 10 moedas... o pão era 3,50... 4 de troco...será que tá certo isso?"';
+                
+                botoes.innerHTML = `
+                    <div class="space-y-2 mt-2">
+                        <p class="text-xs font-semibold text-amber-300 mb-2">🧠 O QUE O LOGAN FAZ?</p>
+                        <button onclick="escolherCaminho('A')" class="w-full p-3 rounded-xl bg-slate-950/80 hover:bg-blue-950/40 border border-amber-500/30 hover:border-blue-500 text-left transition-all cursor-pointer">
+                            <span class="text-xs font-bold text-amber-400">A)</span> Aceita o troco de 4,00 e vai embora correndo.
+                        </button>
+                        <button onclick="escolherCaminho('B')" class="w-full p-3 rounded-xl bg-slate-950/80 hover:bg-pink-950/40 border border-amber-500/30 hover:border-pink-500 text-left transition-all cursor-pointer">
+                            <span class="text-xs font-bold text-amber-400">B)</span> Fala: "Ei! Meu troco deveria ser 6,50!"
+                        </button>
+                        <button onclick="escolherCaminho('C')" class="w-full p-3 rounded-xl bg-slate-950/80 hover:bg-purple-950/40 border border-amber-500/30 hover:border-purple-500 text-left transition-all cursor-pointer">
+                            <span class="text-xs font-bold text-amber-400">C)</span> Volta pra pedir ajuda pra Maga Lola.
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function escolherCaminho(opcao) {
+            const icone = document.getElementById('icone-personagem');
+            const nome = document.getElementById('nome-personagem');
+            const papel = document.getElementById('papel-personagem');
+            const texto = document.getElementById('texto-falado');
+            const botoes = document.getElementById('area-botoes');
+
+            if (opcao === 'A') {
+                icone.innerText = '❌';
+                nome.innerText = 'O Golpe do Goblin!';
+                papel.innerText = 'Deu ruim';
+                texto.innerHTML = `<strong>Goblin:</strong> "Hahaha! Obrigado, otário!"<br><br><strong>Maga Lola:</strong> "Logan! Você perdeu 2,50 moedas! O goblin te enganou!"<br><br><strong>Logan:</strong> "Nãooo! Como eu descubro o troco certo?"<br><br><strong>Maga Lola:</strong> "Vamos fazer o Feitiço do Troco juntos: 10,00 - 3,50 = ? Tenta de novo, Aprendiz!"`;
+                botoes.innerHTML = `
+                    <button onclick="reiniciarCena()" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm transition-all cursor-pointer">
+                        🔄 Tentar Novamente
+                    </button>
+                `;
+            }
+            else if (opcao === 'B') {
+                icone.innerText = '✨';
+                nome.innerText = 'Vitória do Aprendiz!';
+                papel.innerText = 'Resposta Correta';
+                texto.innerHTML = `<strong>Logan:</strong> "Ei! 10 menos 3,50 é 6,50! Você tá me devendo 2,50 a mais!"<br><br><strong>Goblin:</strong> <em>(assustado)</em> "Argh! Como você sabe?! Toma, toma seu troco certo!"<br><br><strong>Maga Lola:</strong> "MUITO BEM! Você usou o Feitiço do Troco! +10 XP!"`;
+                botoes.innerHTML = `
+                    <button onclick="mostrarFinalMago()" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-700 to-indigo-700 hover:from-purple-600 text-amber-100 font-extrabold text-sm shadow-md transition-all cursor-pointer">
+                        🔮 Ouvir o Mago Matemagicamente...
+                    </button>
+                `;
+            }
+            else if (opcao === 'C') {
+                icone.innerText = '🧙‍♀️';
+                nome.innerText = 'Ajuda da Maga Lola';
+                papel.innerText = 'Sabedoria da Taverna';
+                texto.innerHTML = `<strong>Maga Lola:</strong> "Boa, pedir ajuda também é coisa de Mago sábio! Olha: Você tinha 10,00. Gastou 3,50. Quanto sobra?<br>10,00 - 3,50 = 6,50"<br><br><strong>Logan:</strong> "Ahhh! Entendi! O goblin queria me passar a perna!"`;
+                botoes.innerHTML = `
+                    <button onclick="etapaAtual = 6; atualizarTela();" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm transition-all cursor-pointer">
+                        ⚔️ Voltar e Enfrentar o Goblin
+                    </button>
+                `;
+            }
+        }
+
+        function reiniciarCena() {
+            etapaAtual = 4;
+            atualizarTela();
+        }
+
+        function mostrarFinalMago() {
+            const icone = document.getElementById('icone-personagem');
+            const nome = document.getElementById('nome-personagem');
+            const papel = document.getElementById('papel-personagem');
+            const texto = document.getElementById('texto-falado');
+            const botoes = document.getElementById('area-botoes');
+
+            icone.innerText = '🧙‍♂️';
+            nome.innerText = 'Mago Matemagicamente';
+            papel.innerText = 'Aparição Mágica';
+            texto.innerHTML = `<em>(Aparecendo do nada com fumaça roxa)</em> "Hmm... então o Aprendiz aprendeu o Feitiço do Troco?<br><br>Na próxima missão... a Bruxa Morgana vai tentar te vender um amuleto de <strong>49,90</strong>... Você vai resistir?"`;
+            botoes.innerHTML = `
+                <a href="menuAluno.html" class="block w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm text-center shadow-md transition-all">
+                    🏆 Concluir Missão e Voltar ao Mapa
+                </a>
+            `;
+        }
+    </script>
+</body>
+</html>

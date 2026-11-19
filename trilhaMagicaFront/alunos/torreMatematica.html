@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torre do Mago - A Jornada de Logan</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        body { font-family: 'Inter', sans-serif; }
+
+        .bg-torre-mat {
+            background-color: #0b0719;
+            background-image: linear-gradient(rgba(11, 7, 25, 0.6), rgba(11, 7, 25, 0.85)), 
+            url('../assests/img/salvarsenhaaluno.jpn.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-animado {
+            animation: fadeInModal 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 bg-torre-mat min-h-screen flex flex-col justify-between p-4 md:p-6 text-slate-100 relative">
+
+    <!-- MODAL DE BOAS-VINDAS DO LOGAN COM A ARTE ESTILO VISUAL NOVEL -->
+    <div id="modal-boas-vindas" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
+        <div class="w-full max-w-lg bg-slate-900 border-2 border-amber-500 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.3)] modal-animado flex flex-col">
+            
+            <!-- Título no Topo (Estilo Banner) -->
+            <div class="bg-slate-950/90 py-3 px-6 text-center border-b border-amber-500/30">
+                <h2 class="font-playfair text-lg md:text-xl font-bold text-amber-300">
+                    Bem-vindo à Taverna do Aprendiz!
+                </h2>
+                <span class="text-[11px] font-semibold tracking-wider text-amber-400/80 uppercase">
+                    5º Ano • O Descobridor do Dinheiro
+                </span>
+            </div>
+
+            <!-- Imagem Ilustrativa do Logan (Estilo Visual Novel) -->
+            <div class="w-full h-56 md:h-64 relative overflow-hidden bg-slate-950 border-b border-amber-500/30">
+                <img src="../assests/img/BoasvindasLogan.jpn.jpg" alt="Logan na Taverna" class="w-full h-full object-cover object-center">
+            </div>
+
+            <!-- Caixa de Texto / Diálogo -->
+            <div class="p-6 bg-slate-900 flex flex-col gap-4">
+                <div class="bg-slate-950/90 border border-amber-500/30 rounded-2xl p-4">
+                    <p class="text-sm md:text-base text-amber-100/95 leading-relaxed font-playfair italic">
+                        "Meu nome é <strong class="text-amber-400 not-italic font-sans font-bold">Logan</strong> e sou o Descobridor do Dinheiro! O Mago Matemagicamente me deu <strong class="text-amber-400 not-italic font-sans font-bold">50 moedas de ouro</strong>... mas agora fica a pergunta: o que vamos fazer com isso?"
+                    </p>
+                </div>
+
+                <!-- Botão de Ação -->
+                <button onclick="fecharModalBoasVindas()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-extrabold text-sm shadow-[0_0_15px_rgba(245,158,11,0.4)] transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2">
+                    <span>✦</span> Começar a minha aventura <span>✦</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL DA TORRE -->
+    <header class="w-full max-w-3xl mx-auto bg-slate-900/90 backdrop-blur-md border-2 border-amber-500/50 rounded-2xl px-6 py-3 flex items-center justify-between shadow-lg">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">👦🏽</span>
+            <div>
+                <h2 class="font-bold text-amber-100 text-sm">Logan (5º Ano)</h2>
+                <p class="text-xs text-amber-300/80">Torre do Mago • Matemagicamente</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2 bg-slate-950/80 px-4 py-2 rounded-xl border border-amber-500/40">
+            <span class="text-amber-400 text-lg">🪙</span>
+            <div>
+                <span class="text-[10px] text-amber-200/70 block uppercase tracking-wider">Moedas</span>
+                <span class="font-bold text-amber-300 text-sm">50,00</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="w-full max-w-3xl mx-auto my-auto text-center">
+        <h1 class="font-playfair text-3xl font-bold text-amber-100 mb-3">A Grande Feira da Escola</h1>
+        <p class="text-sm text-amber-200/70 mb-6">Prepare-se para administrar suas moedas e conquistar o seu espaço na feira!</p>
+        <a href="torreMatematicaEp1.html" class="inline-block px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl shadow-lg transition-all">
+            Ir para o Episódio 1: Cadê meu troco? ➔
+        </a>
+    </main>
+
+    <footer class="w-full text-center py-2 bg-slate-950/60 backdrop-blur-sm border-t border-amber-500/20">
+        <p class="text-amber-200/60 text-xs font-medium">
+            © 2026 Dhara Rei • Global Solution Citizen Tech (Novembro/2026)
+        </p>
+    </footer>
+
+    <!-- SCRIPT DE CONTROLE DO MODAL -->
+    <script>
+        window.onload = function() {
+            const jaViuIntro = localStorage.getItem('loganIntroVista');
+            if (!jaViuIntro) {
+                document.getElementById('modal-boas-vindas').classList.remove('hidden');
+            }
+        };
+
+        function fecharModalBoasVindas() {
+            localStorage.setItem('loganIntroVista', 'true');
+            document.getElementById('modal-boas-vindas').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

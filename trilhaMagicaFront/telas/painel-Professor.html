@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Mestre - Trilha Mágica</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧙‍♂️</text></svg>">
+    
+    <!-- Fontes do Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8F6F0 !important; color: #2C241D !important; }
+        .details-text { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-200 selection:text-slate-900">
+
+    <!-- Cabeçalho do Painel do Professor -->
+    <header class="w-full bg-[#FFF0E5] backdrop-blur-md border-b border-amber-900/10 py-4 px-6 flex justify-between items-center shadow-sm">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">🧙‍♂️</span>
+            <div>
+                <h2 class="text-amber-950 font-bold text-base tracking-wide">Menu Inicial</h2>
+                <p class="details-text text-xs text-amber-900/60">Painel de Controle</p>
+            </div>
+        </div>
+        <a href="index.html" class="px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 border border-red-200 text-red-700 text-xs font-semibold transition-all flex items-center gap-2 cursor-pointer shadow-sm">
+            <span>🚪</span> Sair
+        </a>
+    </header>
+
+    <!-- Conteúdo Principal: Menu de Ações do Professor -->
+    <main class="flex-grow flex items-center justify-center p-6 my-6">
+        <div class="w-full max-w-4xl bg-white border border-amber-900/15 rounded-3xl p-8 md:p-10 shadow-[0_10px_35px_rgba(44,36,29,0.06)]">
+            
+            <div class="text-center mb-10">
+                <h1 class="text-3xl md:text-4xl font-bold text-amber-950 mb-2">Bem-vindo(a)</h1>
+                <p class="details-text text-sm md:text-base text-amber-900/70">Nesse espaço você pode encontrar acolhimento, e gerenciar atividades para os alunos.</p>
+            </div>
+
+            <!-- Grade de Botões de Ação -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                
+                <!-- 1. Progresso da Turma -->
+                <a href="./progresso-trilhaProfessor.html" class="p-6 rounded-2xl bg-[#FAF8F5] hover:bg-[#F3EFEA] border border-amber-900/10 hover:border-amber-700/40 text-left transition-all group cursor-pointer flex items-start gap-4 shadow-sm block">
+                    <span class="text-3xl p-3 rounded-2xl bg-amber-100/70 border border-amber-200 group-hover:scale-105 transition-transform">📝</span>
+                    <div>
+                        <h3 class="text-amber-950 font-bold text-lg group-hover:text-amber-900">Progresso da Turma</h3>
+                        <p class="details-text text-xs text-amber-900/70 mt-1 leading-relaxed">Acompanhe o progresso individual e coletivo dos aprendizes.</p>
+                    </div>
+                </a>
+
+                <!-- 2. Cadastrar Atividade -->
+                <a href="cadastrar-atividade.html" class="p-6 rounded-2xl bg-[#FAF8F5] hover:bg-[#F3EFEA] border border-amber-900/10 hover:border-amber-700/40 text-left transition-all group cursor-pointer flex items-start gap-4 shadow-sm block">
+                    <span class="text-3xl p-3 rounded-2xl bg-amber-100/70 border border-amber-200 group-hover:scale-105 transition-transform">📝</span>
+                    <div>
+                        <h3 class="text-amber-950 font-bold text-lg group-hover:text-amber-900">Cadastrar Atividade</h3>
+                        <p class="details-text text-xs text-amber-900/70 mt-1 leading-relaxed">Crie novos desafios, missões e exercícios práticos para os alunos.</p>
+                    </div>
+                </a>
+
+                <!-- 3. Registro de Bem-Estar -->
+                <a href="./bemestar-professor.html" class="p-6 rounded-2xl bg-[#FAF8F5] hover:bg-[#F3EFEA] border border-amber-900/10 hover:border-emerald-700/40 text-left transition-all group cursor-pointer flex items-start gap-4 shadow-sm block">
+                    <span class="text-3xl p-3 rounded-2xl bg-emerald-100/70 border border-emerald-200 group-hover:scale-105 transition-transform">🌱</span>
+                    <div>
+                        <h3 class="text-amber-950 font-bold text-lg group-hover:text-emerald-900">Bem-Estar</h3>
+                        <p class="details-text text-xs text-amber-900/70 mt-1 leading-relaxed">Cuide de você, respire fundo e faça uma pausa.</p>
+                    </div>
+                </a>
+
+                <!-- 4. IA Adaptar Plano de Aula -->
+                <a href="./tela-adaptar-ia.html" class="p-6 rounded-2xl bg-gradient-to-br from-purple-50/80 to-indigo-50/60 hover:from-purple-100 hover:to-indigo-100 border border-purple-200 hover:border-purple-400 text-left transition-all group cursor-pointer flex items-start gap-4 shadow-sm block">
+                    <span class="text-3xl p-3 rounded-2xl bg-purple-100 border border-purple-200 group-hover:scale-105 transition-transform">✨</span>
+                    <div>
+                        <h3 class="text-purple-950 font-bold text-lg">Adaptar Plano com a Angel</h3>
+                        <p class="details-text text-xs text-purple-900/80 mt-1 leading-relaxed">Utilize a Angel nossa inteligência Artificial para gerar e adaptar conteúdos pedagógicos para atender a necessidade dos alunos atípicos.</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="w-full text-center py-4 bg-white border-t border-amber-900/10">
+        <p class="details-text text-xs text-amber-900/60">
+            © por Dhara Rei   • Global Solution Citizen Tech (Novembro/2026)
+        </p>
+    </footer>
+
+    <!-- Conteúdo principal da página -->
+    <main>
+        <!-- Seus formulários e cards -->
+    </main>
+
+    <!-- Rodapé (Footer) - A última coisa visual -->
+    <footer class="w-full text-center py-4 bg-[#FCEDF0]">
+        <p class="text-xs">© 2026 Trilha Mágica</p>
+    </footer>
+
+    <!-- SCRIPT DO JAVASCRIPT  -->
+    <script>
+        async function cadastrarProfessor(event) {
+            // Toda a lógica do fetch para a porta 8081 vai aqui dentro...
+        }
+    </script>
+</body>
+</html>
+
+</body>
+</html>

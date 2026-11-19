@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espaço de Bem-Estar - Trilha Mágica</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+    
+    <!-- Fontes do Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rosePastel: '#F2a7b5',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #FDF2F4 !important; 
+            color: #382933 !important; 
+        }
+        .details-text { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-rosePastel selection:text-slate-900">
+
+    <!-- Cabeçalho Inspirado no App de Meditação -->
+    <header class="w-full bg-[#FCEDF0]/90 backdrop-blur-md border-b border-rose-200/60 py-4 px-6 flex justify-between items-center shadow-sm">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">🌱</span>
+            <div>
+                <h2 class="text-rose-950 font-bold text-base tracking-wide">Espaço de Bem-Estar</h2>
+                <p class="details-text text-xs text-rose-800/70">Respire, acolha e recarregue</p>
+            </div>
+        </div>
+        <a href="painel-professor.html" class="px-4 py-2 rounded-xl bg-rose-100 hover:bg-rose-200 border border-rose-300 text-rose-950 text-xs font-semibold transition-all flex items-center gap-2 cursor-pointer shadow-sm">
+            <span>←</span> Voltar ao Menu
+        </a>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow flex flex-col items-center p-6 my-4">
+        
+        <!-- Cartão de Perfil / Saudação (Estilo Lojong) -->
+        <div class="w-full max-w-3xl bg-gradient-to-r from-[#E8A5B2] to-[#D48C9C] text-white rounded-3xl p-6 md:p-8 shadow-md flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full bg-white/20 border-2 border-white/40 flex items-center justify-center text-3xl shadow-inner">
+                    🧙‍♀️
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold">Boa tarde, Mestre!</h1>
+                    <p class="details-text text-xs md:text-sm text-white/90 mt-1">"A chave para a transformação é a continuidade."</p>
+                </div>
+            </div>
+            <!-- Contador de Sequência -->
+            <div class="bg-white/20 backdrop-blur-md border border-white/30 px-5 py-3 rounded-2xl text-center">
+                <span class="block text-2xl font-bold">3d</span>
+                <span class="details-text text-[10px] uppercase tracking-wider text-white/90">Sequência de Pausas</span>
+            </div>
+        </div>
+
+        <!-- Seção de Ferramentas / Práticas de Autocuidado -->
+        <div class="w-full max-w-3xl space-y-4">
+            <h2 class="text-xl font-bold text-rose-950 px-1">Práticas e Ferramentas</h2>
+
+            <!-- Card 1: Movimento e Yoga -->
+            <div class="bg-[#FFFBF7] hover:bg-[#FFF5F0] border border-rose-200/60 rounded-2xl p-5 flex items-center justify-between transition-all shadow-sm group cursor-pointer" onclick="alert('Iniciando sessão de Movimento e Yoga...')">
+                <div class="flex items-center gap-4">
+                    <span class="text-2xl p-3 rounded-xl bg-pink-100/70 border border-pink-200 group-hover:scale-105 transition-transform">🧘‍♀️</span>
+                    <div>
+                        <h3 class="text-rose-950 font-bold text-base">Movimento e Yoga</h3>
+                        <p class="details-text text-xs text-rose-900/70 mt-0.5">Pratique yoga e exercícios de alongamento para corpo e mente.</p>
+                    </div>
+                </div>
+                <span class="text-rose-400 group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+
+            <!-- Card 2: Inspirações -->
+            <div class="bg-[#FFFBF7] hover:bg-[#EAF7F0] border border-rose-200/60 rounded-2xl p-5 flex items-center justify-between transition-all shadow-sm group cursor-pointer" onclick="alert('Abrindo leituras e inspirações...')">
+                <div class="flex items-center gap-4">
+                    <span class="text-2xl p-3 rounded-xl bg-emerald-100/70 border border-emerald-200 group-hover:scale-105 transition-transform">💡</span>
+                    <div>
+                        <h3 class="text-rose-950 font-bold text-base">Inspirações</h3>
+                        <p class="details-text text-xs text-rose-900/70 mt-0.5">Textos e reflexões inspiradoras para o seu dia pedagógico.</p>
+                    </div>
+                </div>
+                <span class="text-rose-400 group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+
+            <!-- Card 3: Respiração -->
+            <div class="bg-[#FFFBF7] hover:bg-[#EBF5FB] border border-rose-200/60 rounded-2xl p-5 flex items-center justify-between transition-all shadow-sm group cursor-pointer" onclick="alert('Iniciando exercício de respiração guiada...')">
+                <div class="flex items-center gap-4">
+                    <span class="text-2xl p-3 rounded-xl bg-sky-100/70 border border-sky-200 group-hover:scale-105 transition-transform">💨</span>
+                    <div>
+                        <h3 class="text-rose-950 font-bold text-base">Respiração</h3>
+                        <p class="details-text text-xs text-rose-900/70 mt-0.5">Exercícios de respiração guiada para relaxar e focar.</p>
+                    </div>
+                </div>
+                <span class="text-rose-400 group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+
+            <!-- Card 4: Timer de Silêncio -->
+            <div class="bg-[#FFFBF7] hover:bg-[#FEF9E7] border border-rose-200/60 rounded-2xl p-5 flex items-center justify-between transition-all shadow-sm group cursor-pointer" onclick="alert('Iniciando timer de meditação silenciosa...')">
+                <div class="flex items-center gap-4">
+                    <span class="text-2xl p-3 rounded-xl bg-amber-100/70 border border-amber-200 group-hover:scale-105 transition-transform">⏳</span>
+                    <div>
+                        <h3 class="text-rose-950 font-bold text-base">Timer de Silêncio</h3>
+                        <p class="details-text text-xs text-rose-900/70 mt-0.5">Temporizador para pausas silenciosas e descanso mental.</p>
+                    </div>
+                </div>
+                <span class="text-rose-400 group-hover:translate-x-1 transition-transform">→</span>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Rodapé Oficial -->
+    <footer class="w-full text-center py-4 bg-[#FCEDF0] border-t border-rose-200/60 mt-6">
+        <p class="details-text text-xs text-rose-800/70">
+            © 2026 Dhara Rei & Gemini • Global Solution Citizen Tech (Novembro/2026)
+        </p>
+    </footer>
+
+</body>
+</html>

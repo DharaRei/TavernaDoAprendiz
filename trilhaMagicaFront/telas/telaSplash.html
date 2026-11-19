@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carregando...</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        body { font-family: 'Inter', sans-serif; }
+        
+        .bg-taverna {
+            background-color: #0b0719;
+            background-image: radial-gradient(circle at center, rgba(46, 16, 101, 0.4) 0%, #0b0719 75%);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-taverna text-slate-200 min-h-screen flex flex-col items-center justify-between p-6 overflow-hidden">
+
+    <!-- Espaçador superior -->
+    <div></div>
+
+    <!-- Card Central Estilo Pergaminho / Mensagem Inspiradora -->
+    <div class="w-full max-w-lg bg-slate-900/90 backdrop-blur-xl border-2 border-amber-500/50 rounded-3xl p-8 md:p-10 shadow-[0_0_50px_rgba(245,158,11,0.25)] text-center fade-in">
+        
+        <!-- Ícone / Símbolo Mágico -->
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-3xl mb-6 shadow-inner">
+            ✨
+        </div>
+
+        <!-- Frase Motivacional Dinâmica -->
+        <div class="min-h-[110px] flex flex-col justify-center mb-6">
+            <p id="frase-splash" class="font-playfair text-xl md:text-2xl italic text-amber-100 leading-relaxed">
+                "Carregando sabedoria..."
+            </p>
+            <span id="autor-splash" class="text-xs font-semibold tracking-wider text-amber-400/80 uppercase mt-3">
+                Trilha Mágica
+            </span>
+        </div>
+
+        <!-- Barra de Progresso Sutil -->
+        <div class="w-full h-1.5 bg-slate-950 rounded-full overflow-hidden border border-amber-500/20">
+            <div id="barra-progresso" class="h-full bg-gradient-to-r from-amber-500 to-yellow-300 transition-all duration-300" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Rodapé Oficial -->
+    <footer class="w-full text-center py-2 bg-slate-950/40 backdrop-blur-sm border-t border-amber-500/10">
+        <p class="text-amber-200/60 text-xs font-medium">
+            © 2026 Dhara Rei  • Global Solution Citizen Tech (Novembro/2026)
+        </p>
+    </footer>
+
+    <script>
+        // Banco de frases inspiradoras para revezar na splash
+        const frasesInspiradoras = [
+            {
+                texto: "O professor é a ponte entre o sonho e a realização.",
+                autor: "Paulo Freire"
+            },
+            {
+                texto: "Por trás de cada conquista, há sempre um professor.",
+                autor: "Trilha Mágica • Citizen Tech"
+            },
+            {
+                texto: "Toda profissão começa na sala de aula. Professor é orgulho!",
+                autor: "Mestres do Saber"
+            },
+            {
+                texto: "Ensinar não é transferir conhecimento, mas criar as possibilidades para a sua própria produção.",
+                autor: "Paulo Freire"
+            }
+        ];
+
+        // Sorteia uma frase aleatória toda vez que a splash abre
+        const selecionada = frasesInspiradoras[Math.floor(Math.random() * frasesInspiradoras.length)];
+        document.getElementById('frase-splash').innerText = `"${selecionada.texto}"`;
+        document.getElementById('autor-splash').innerText = `— ${selecionada.autor}`;
+
+// Simula o carregamento da barra e redireciona para o Menu correto após o carregamento
+        let progresso = 0;
+        const barra = document.getElementById('barra-progresso');
+        
+        const intervalo = setInterval(() => {
+            progresso += 2;
+            barra.style.width = progresso + '%';
+            if (progresso >= 100) {
+                clearInterval(intervalo);
+
+                // Verifica quem está logado para mandar para o painel certo
+                const professorLogado = localStorage.getItem('professorLogado');
+                const alunoLogado = localStorage.getItem('alunoLogado');
+
+                if (professorLogado) {
+                    window.location.href = 'painel-Professor.html'; // Substitua pelo nome exato do arquivo de menu do professor
+                } else if (alunoLogado) {
+                    window.location.href = 'menuAluno.html'; // Substitua pelo nome do menu do aluno
+                } else {
+                    window.location.href = 'index.html'; // Fallback caso não ache nada
+                }
+            }
+        }, 60); // 60ms * 50 passos = ~3 segundos de animação fluida
+    </script>
+</body>
+</html>
